@@ -34,17 +34,7 @@ llm = ChatGoogleGenerativeAI(
     max_output_tokens=512
 )
 
-'''@st.cache_resource
-def get_model():
-    return ChatOllama(
-        model="qwen2.5:1.5b",
-        base_url="http://localhost:11434",
-        temperature=0.2,
-        num_predict=250,
-        num_ctx=2048
-    )
 
-llm = get_model()'''
 
 # ---------------- SYSTEM INSTRUCTIONS ----------------
 
@@ -135,8 +125,14 @@ if user_input:
 
             try:
                 response = llm.invoke(chat_messages)
-
-                answer = response.content
+                if isinstance(response.content, str):
+                    answer = response.content
+                else:
+                    answer = "\n".join(
+                        block["text"]
+                        for block in response.content
+                        if isinstance(block, dict) and block.get("type") == "text"
+    )
 
                 st.markdown(answer)
 
