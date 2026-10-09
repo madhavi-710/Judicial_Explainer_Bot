@@ -1,6 +1,5 @@
-from langchain_google_genai import ChatGoogleGenerativeAI
 import streamlit as st
-from langchain_ollama import ChatOllama
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
 # ---------------- PAGE CONFIGURATION ----------------
@@ -149,12 +148,8 @@ if user_input:
                 )
 
             except Exception as e:
-                st.error(
-                    "Unable to generate a response. "
-                    "Please check whether Ollama is running."
-                )
+                st.error("Unable to generate a response from Gemini.")
+                st.exception(e)
 
-                st.caption(str(e))
-
-                # Remove the failed user message
+             # Remove the failed user message
                 st.session_state.messages.pop()

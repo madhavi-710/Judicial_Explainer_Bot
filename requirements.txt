@@ -1,5 +1,4 @@
-langchain-google-genai
 streamlit
 langchain
 langchain-core
-langchain-ollama
+langchain-google-genai
