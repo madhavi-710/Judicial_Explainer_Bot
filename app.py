@@ -1,3 +1,4 @@
+from langchain_google_genai import ChatGoogleGenerativeAI
 import streamlit as st
 from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
@@ -27,8 +28,14 @@ st.divider()
 
 # ---------------- INITIALIZE AI MODEL ----------------
 
+llm = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash",
+    google_api_key=st.secrets["GOOGLE_API_KEY"],
+    temperature=0.2,
+    max_output_tokens=512
+)
 
-@st.cache_resource
+'''@st.cache_resource
 def get_model():
     return ChatOllama(
         model="qwen2.5:1.5b",
@@ -38,7 +45,7 @@ def get_model():
         num_ctx=2048
     )
 
-llm = get_model()
+llm = get_model()'''
 
 # ---------------- SYSTEM INSTRUCTIONS ----------------
 
